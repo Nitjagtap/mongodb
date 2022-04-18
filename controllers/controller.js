@@ -4,24 +4,8 @@ const url = "mongodb://localhost:27017/";
 
 
 class Controller {
-    static async controller(req, res) {
-        try {
-            MongoClient.connect(url, function (err, db) {
-                if (err) throw err;
-                const dbo = db.db("test");
-
-                dbo.createCollection("customers", function (err, res) {
-                    if (err) throw err;
-                    console.log("Collection created!");
-                    db.close();
-                });
-            });
-        } catch (e) {
-
-        }
-    }
-
-    static async controller2(req, res) {
+    
+    static async insert(req, res) {
         try {
             MongoClient.connect(url, function (err, db) {
                 if (err) throw err;
@@ -51,30 +35,29 @@ class Controller {
                 });
             });
         } catch (e) {
-
+            console.log(e)
         }
     }
-    static async controller3(req, res) {
+    static async select(req, res) {
         try {
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(url, function (err, db) {
                 if (err) throw err;
                 var dbo = db.db("test");
-                dbo.collection("customers").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function(err, result) {
-                  if (err) throw err;
-                  console.log(result);
-                  res.send(result);
-                  db.close();
+                dbo.collection("customers").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function (err, result) {
+                    if (err) throw err;
+                    console.log(result);
+                    res.send(result);
+                    db.close();
                 });
-              });
-              
-        } catch (e) {
+            });
 
+        } catch (e) {
+            console.log(e)
         }
     }
 
-    //Filter the Result
 
-    static async controller4(req, res) {
+    static async sort(req, res) {
         try {
 
             MongoClient.connect(url, function (err, db) {
@@ -89,13 +72,13 @@ class Controller {
                 });
             });
         } catch (e) {
-
+            console.log(e)
         }
     }
 
     //sort result ascending(1) or descending(-1)
 
-    static async controller5(req, res) {
+    static async order(req, res) {
         try {
 
             MongoClient.connect(url, function (err, db) {
@@ -110,13 +93,13 @@ class Controller {
                 });
             });
         } catch (e) {
-
+            console.log(e)
         }
     }
 
     //delete document
 
-    static async controller6(req, res) {
+    static async delete(req, res) {
         try {
             MongoClient.connect(url, function (err, db) {
                 if (err) throw err;
@@ -131,29 +114,30 @@ class Controller {
                 });
             });
         } catch (e) {
+            console.log(e)
 
         }
     }
 
     // update document
-    static async controller7(req, res) {
+    static async update(req, res) {
         try {
 
-            
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("test");
-    var myquery = { address: "Valley 345" };
-  var newvalues = { $set: { address: "Canyon 123" } };
-    dbo.collection("customers").updateMany(myquery, newvalues, function(err, obj) {
-      if (err) throw err;
-      console.log(obj.modifiedCount+ " document(s) updated");
-      res.send(obj)
-      db.close();
-    });
-  });
-        } catch (error) {
 
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+                var dbo = db.db("test");
+                var myquery = { address: "Valley 345" };
+                var newvalues = { $set: { address: "Canyon 123" } };
+                dbo.collection("customers").updateMany(myquery, newvalues, function (err, obj) {
+                    if (err) throw err;
+                    console.log(obj.modifiedCount + " document(s) updated");
+                    res.send(obj)
+                    db.close();
+                });
+            });
+        } catch (error) {
+            console.log(error)
         }
     }
 }

@@ -2,19 +2,17 @@ const express = require("express");
 const controller = require("../controllers/controller");
 const router = express.Router();
 
-router.get("/collection",controller.controller);
+pouter.post("/insert",controller.insert);
 
-router.post("/insert",controller.controller2)
+router.get("/select",controller.select);
 
-router.get("/select",controller.controller3)
+router.get("/filter",controller.sort);
 
-router.get("/filter",controller.controller4);
+router.get("/sort",controller.order);
 
-router.get("/sort",controller.controller5)
+router.delete("/delete",controller.delete);
 
-router.delete("/delete",controller.controller6)
-
-router.put("/update",controller.controller7)
+router.put("/update",controller.update);
 
 
 

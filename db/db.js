@@ -15,5 +15,4 @@ MongoClient.connect(url,
   db.close();
 });
 
-
 module.exports=MongoClient;
