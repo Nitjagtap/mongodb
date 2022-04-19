@@ -2,11 +2,11 @@ const express = require("express");
 const controller = require("../controllers/controller");
 const router = express.Router();
 
-pouter.post("/insert",controller.insert);
+router.post("/insert",controller.insert);
 
 router.get("/select",controller.select);
 
-router.get("/filter",controller.sort);
+router.get("/aggregate",controller.aggregate);
 
 router.get("/sort",controller.order);
 
