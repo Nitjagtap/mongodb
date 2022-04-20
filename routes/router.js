@@ -8,7 +8,11 @@ router.get("/select",controller.select);
 
 router.get("/aggregate",controller.aggregate);
 
-router.get("/sort",controller.order);
+router.get("/order",controller.order);
+router.get("/limit",controller.limit);
+router.get("/index",controller.index);
+
+
 
 router.delete("/delete",controller.delete);
 

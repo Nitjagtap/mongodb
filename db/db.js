@@ -10,7 +10,7 @@ MongoClient.connect(url,
   function(err, db) {
   if (err) throw err;
   else{
-  console.log("Database created!"); 
+  console.log("Database connected!"); 
   }
   db.close();
 });

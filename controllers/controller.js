@@ -24,9 +24,13 @@ class Controller {
                     { name: 'Ben', address: 'Park Lane 38', salary:40000 },
                     { name: 'William', address: 'Central st 954' , salary:20000},
                     { name: 'Chuck', address: 'Main Road 989', salary:20500 },
-                    { name: 'Viola', address: 'Sideway 1633', salary:30000 }
+                    { name: 'Viola', address: 'Sideway 1633', salary:30000 },
+                
                 ];
-                dbo.collection("customers").insertMany(myobj, function (err, result) {
+                
+                dbo.collection("customers").insertMany(myobj, async function (err, result) {
+                    const data = await dbo.collection("customers").createIndex({ name: 1 });
+                    console.log(`Index created: ${data}`);
                     if (err) throw err;
                     console.log("Number of documents inserted: " + result.insertedCount);
                     res.send(result)
@@ -43,7 +47,7 @@ class Controller {
             MongoClient.connect(url, function (err, db) {
                 if (err) throw err;
                 var dbo = db.db("test");
-                dbo.collection("customers").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function (err, result) {
+                dbo.collection("customers").find({},{projection : { _id: 0, name: 1, address: 1 } }).toArray(function (err, result) {
                     if (err) throw err;
                     console.log(result);
                     res.send(result);
@@ -113,7 +117,42 @@ class Controller {
                 dbo.collection("customers").find().sort(mysort).toArray(function (err, result) {
                     if (err) throw err;
                     console.log(result);
-                    res.send(result)
+                    res.send(result);
+                    db.close();
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    static async limit(req, res) {
+        try {
+
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+                var dbo = db.db("test");
+                dbo.collection("customers").find().limit(5).skip(5).toArray(function (err, result) {
+                    if (err) throw err;
+                    console.log(result);
+                    res.send(result);
+                    db.close();
+                });
+            });
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    static async index(req, res) {
+        try {
+
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+                var dbo = db.db("test");
+                dbo.collection("customers").getIndexs().toArray(function (err, result) {
+                    if (err) throw err;
+                    console.log(result);
+                    res.send(result);
                     db.close();
                 });
             });
@@ -165,6 +204,7 @@ class Controller {
             console.log(error)
         }
     }
+    
 }
 
 module.exports = Controller
